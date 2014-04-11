@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html ng-app="app">     
+  <head>     
+<script data-require="angular.js@1.1.5" data-semver="1.1.5" src="http://code.angularjs.org/1.1.5/angular.min.js"></script>      
+<script src="js/ngStorage.js"></script>        
+<script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.10.0.js"></script>
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">   
+<script>
+angular.module('app', ['ngStorage','ui.bootstrap'])
+      .controller('Ctrl', function($scope,$localStorage,$log)
+      {
+      
+      $scope.$log = $log;    
+      $scope.addTodo=function()
+      {
+        $scope.$storage.array.push($scope.name);
+      };
+      $scope.$storage = $localStorage.$default({
+         array: ["hai","jaja"]
+      }); 
+      $scope.removeele=function()
+      {
+         $scope.$storage.array.splice($scope.$storage.array.indexOf(""),1);
+         $scope.$log.log(array1);
+      } 
+      $scope.closeAlert = function(index) {
+    $scope.$storage.array.splice(index, 1);
+  };  
+        
+      }
+);
+</script>       
+</head>     
+<body ng-controller="Ctrl"> 
+<center>
+<div style="width:95%"" class="well well-sm"> To Do Application </div> 
+<div style="width:50%" align="left">    
+
+<input placeholder="Write Here" popover-placement="right" popover="Add Task to do" popover-trigger="focus" type="text" ng-model="name" class="form-control" style="width:80%"/>    
+<br/>     
+<button  ng-click="addTodo()" class="btn btn-success">Add ToDo Task       
+</button>                        
+</div>   
+<br>
+<alert style="width:50%" ng-repeat="alert in $storage.array" type="'info'" close="closeAlert($index)">{{alert}}</alert>
+</center>
+</body>
+</html>
